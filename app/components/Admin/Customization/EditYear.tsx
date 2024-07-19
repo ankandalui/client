@@ -21,7 +21,7 @@ const EditYear = (props: Props) => {
 
   useEffect(() => {
     if (data) {
-      setCourseyear(data.layout?.courseyear);
+      setCourseyear(data.layout?.courseyear || []);
     }
     if (layoutSuccess) {
       refetch();
@@ -45,13 +45,16 @@ const EditYear = (props: Props) => {
   };
 
   const newCourseyearHandler = () => {
-    if (courseyear[courseyear.length - 1].title === "") {
-      toast.error("Courseyear title cannot be empty");
-    } else {
+    if (
+      courseyear.length === 0 ||
+      courseyear[courseyear.length - 1].title !== ""
+    ) {
       setCourseyear((prevCourseyear: any) => [
         ...prevCourseyear,
         { title: "" },
       ]);
+    } else {
+      toast.error("Courseyear title cannot be empty");
     }
   };
 

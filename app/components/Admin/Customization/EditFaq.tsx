@@ -13,7 +13,7 @@ import Loader from "../../Loader/Loader";
 type Props = {};
 
 const EditFaq = (props: Props) => {
-  const { data, isLoading } = useGetHeroDataQuery("FAQ", {
+  const { data, isLoading, refetch } = useGetHeroDataQuery("FAQ", {
     refetchOnMountOrArgChange: true,
   });
   const [editLayout, { isSuccess: layoutSuccess, error }] =
@@ -23,10 +23,14 @@ const EditFaq = (props: Props) => {
 
   useEffect(() => {
     if (data) {
-      setQuestions(data.layout?.faq);
+      setQuestions(data.layout?.faq || []);
     }
+  }, [data]);
+
+  useEffect(() => {
     if (layoutSuccess) {
       toast.success("FAQ updated successfully");
+      refetch(); // Fetch the latest data after a successful mutation
     }
 
     if (error) {
@@ -35,7 +39,7 @@ const EditFaq = (props: Props) => {
         toast.error(errorData?.data?.message);
       }
     }
-  }, [data, layoutSuccess, error]);
+  }, [layoutSuccess, error, refetch]);
 
   const toggleQuestion = (id: any) => {
     setQuestions((prevQuestions) =>
@@ -65,7 +69,6 @@ const EditFaq = (props: Props) => {
     ]);
   };
 
-  // Function to check if the FAQ arrays are unchanged
   const areQuestionsUnchanged = (
     originalQuestions: any[],
     newQuestions: any[]

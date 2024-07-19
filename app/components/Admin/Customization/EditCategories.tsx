@@ -18,14 +18,17 @@ const EditCategories = (props: Props) => {
   const [editLayout, { isSuccess: layoutSuccess, error }] =
     useEditLayoutMutation();
   const [categories, setCategories] = useState<any>([]);
+  const [hasShownSuccessToast, setHasShownSuccessToast] = useState(false);
 
   useEffect(() => {
     if (data) {
-      setCategories(data.layout?.categories);
+      setCategories(data.layout?.categories || []);
     }
-    if (layoutSuccess) {
+
+    if (layoutSuccess && !hasShownSuccessToast) {
       refetch();
       toast.success("Categories updated successfully");
+      setHasShownSuccessToast(true); // Prevent showing toast multiple times
     }
 
     if (error) {
@@ -34,7 +37,7 @@ const EditCategories = (props: Props) => {
         toast.error(errorData?.data?.message);
       }
     }
-  }, [data, layoutSuccess, error, refetch]);
+  }, [data, layoutSuccess, error, refetch, hasShownSuccessToast]);
 
   const handleCategoriesAdd = (id: any, value: string) => {
     setCategories((prevCategory: any) =>
@@ -43,19 +46,13 @@ const EditCategories = (props: Props) => {
   };
 
   const newCategoriesHandler = () => {
-    console.log("Adding new category"); // Debugging line to ensure this function is called
     if (
-      categories.length > 0 &&
-      categories[categories.length - 1].title === ""
+      categories.length === 0 ||
+      categories[categories.length - 1].title !== ""
     ) {
-      toast.error("Category title cannot be empty");
+      setCategories((prevCategory: any) => [...prevCategory, { title: "" }]);
     } else {
-      console.log("Before adding new category:", categories); // Debug before state update
-      setCategories((prevCategory: any) => [
-        ...prevCategory,
-        { title: "", _id: Date.now() }, // Ensure _id is unique for each category
-      ]);
-      console.log("After attempting to add new category:", categories); // Note: This might not reflect the update immediately due to batching
+      toast.error("Category title cannot be empty");
     }
   };
 
@@ -79,6 +76,7 @@ const EditCategories = (props: Props) => {
         type: "Categories",
         categories,
       });
+      setHasShownSuccessToast(false); // Allow showing success toast again for the next update
     }
   };
 

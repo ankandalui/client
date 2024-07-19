@@ -1,4 +1,5 @@
 "use client";
+
 import DashboardHero from "../../../app/components/Admin/DashboardHero";
 import AdminProtected from "@/app/hooks/adminProtected";
 import Heading from "../../../app/utils/Heading";
@@ -8,7 +9,7 @@ import EditFaq from "../../components/Admin/Customization/EditFaq";
 
 type Props = {};
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
   return (
     <div>
       {/* <AdminProtected> */}
@@ -32,4 +33,4 @@ const page = (props: Props) => {
   );
 };
 
-export default page;
+export default Page;
