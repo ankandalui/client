@@ -37,7 +37,6 @@ const CreateCourse = (props: Props) => {
     tags: "",
     level: "",
     categories: "",
-    courseyear: "",
     demoUrl: "",
     thumbnail: "",
   });
@@ -93,7 +92,6 @@ const CreateCourse = (props: Props) => {
       name: courseInfo.name,
       description: courseInfo.description,
       categories: courseInfo.categories,
-      courseyear: courseInfo.courseyear,
       price: courseInfo.price,
       estimatedPrice: courseInfo.estimatedPrice,
       tags: courseInfo.tags,

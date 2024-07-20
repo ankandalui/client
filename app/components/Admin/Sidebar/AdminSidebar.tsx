@@ -251,13 +251,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Exam Year"
-              to="/admin/courseyear"
-              icon={<WysiwygIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
 
             <Typography
               variant="h5"

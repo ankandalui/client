@@ -18,17 +18,10 @@ const CourseInformation: FC<Props> = ({
   const [dragging, setDragging] = useState(false);
   const { data } = useGetHeroDataQuery("Categories", {});
   const [categories, setCategories] = useState([]);
-  const [courseyear, setCourseyear] = useState([]);
 
   useEffect(() => {
     if (data) {
       setCategories(data.layout?.categories);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (data) {
-      setCourseyear(data.layout?.courseyaer);
     }
   }, [data]);
 
@@ -196,34 +189,7 @@ const CourseInformation: FC<Props> = ({
           </div>
         </div>
         <br />
-        <div>
-          <div className="w-[50%]">
-            <label className={`${styles.label} w-[50%]`}>Exam Year</label>
-            <select
-              name=""
-              id=""
-              className={`${styles.input}`}
-              value={courseInfo.courseyear}
-              onChange={(e: any) =>
-                setCourseInfo({ ...courseInfo, courseyear: e.target.value })
-              }
-            >
-              <option className="dark:bg-[#000] text-[#fff]" value="">
-                Select Year
-              </option>
-              {courseyear &&
-                courseyear.map((item: any) => (
-                  <option
-                    className="dark:bg-[#000] text-[#fff]"
-                    value={item.title}
-                    key={item._id}
-                  >
-                    {item.title}
-                  </option>
-                ))}
-            </select>
-          </div>
-        </div>
+        <div></div>
         <br />
         <div className="w-full flex justify-between">
           <div className="w-[45%]">
